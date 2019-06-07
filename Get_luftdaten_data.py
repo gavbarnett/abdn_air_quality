@@ -117,6 +117,20 @@ def write_json(data, json_file, format):
 				f.write(json.dumps(d))
 			print(json_file + location_id + '.json' + " - created")
 
+def infolist():
+	summary = {}
+	file_list = glob.iglob(file_directory +'*.json')
+	for input_file in file_list:
+		if not(input_file[-9:] == 'info.json'):
+			with open(input_file, "r") as f:
+				d = json.load(f)
+				location_id_temp = list(d.keys())[0]
+				summary[location_id_temp] = {}			
+				summary[location_id_temp]['info'] = d[location_id_temp]['info']
+	with open(file_directory + 'info.json', "w") as f:
+			f.write(json.dumps(summary, sort_keys=True, indent=4))
+			print(file_directory + 'info.json' + " - created")
+
 def tidy_values(our_list):
 	#organises ourlist as a dictionary of dictionaries follows:
 	new_dict = {}
@@ -190,7 +204,8 @@ def main():
 	#Parse new data into JSON
 	print('Parsing data to JSON')
 	MrParsy()
-
+	print('Building summary file...')
+	infolist()
 
 	#weather_data = get_weather.main(box)
 	#pp = pprint.PrettyPrinter(indent=1)

@@ -19,11 +19,9 @@ def getIdFormLocation (lat, lon):
     lat1 = radians(lat1a)
     lon1 = radians(lon1a)
     location_id = "3121"
-    file_list = glob.iglob(json_file +'*.json')
-    for input_file in file_list:
-        with open(input_file, "r") as f:
-            d = json.load(f)
-            location_id_temp = list(d.keys())[0]    
+    with open(json_file + "info.json", "r") as f:
+        d = json.load(f)
+        for location_id_temp in d:  
             lat2 = float(d[location_id_temp]['info']['latitude'])
             lon2 = float(d[location_id_temp]['info']['longitude'])
             # see https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude/43211266#43211266 for details
